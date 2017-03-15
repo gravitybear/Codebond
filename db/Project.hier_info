@@ -1,0 +1,114 @@
+|Project
+KEY[0] => ~NO_FANOUT~
+HEX1[0] <= hex_decoder:h1.port1
+HEX1[1] <= hex_decoder:h1.port1
+HEX1[2] <= hex_decoder:h1.port1
+HEX1[3] <= hex_decoder:h1.port1
+HEX1[4] <= hex_decoder:h1.port1
+HEX1[5] <= hex_decoder:h1.port1
+HEX1[6] <= hex_decoder:h1.port1
+HEX0[0] <= hex_decoder:h0.port1
+HEX0[1] <= hex_decoder:h0.port1
+HEX0[2] <= hex_decoder:h0.port1
+HEX0[3] <= hex_decoder:h0.port1
+HEX0[4] <= hex_decoder:h0.port1
+HEX0[5] <= hex_decoder:h0.port1
+HEX0[6] <= hex_decoder:h0.port1
+SW[0] => SW[0].IN2
+SW[1] => SW[1].IN1
+SW[2] => ~NO_FANOUT~
+SW[3] => ~NO_FANOUT~
+CLOCK_50 => En[0].CLK
+CLOCK_50 => En[1].CLK
+CLOCK_50 => En[2].CLK
+CLOCK_50 => En[3].CLK
+CLOCK_50 => En[4].CLK
+CLOCK_50 => En[5].CLK
+CLOCK_50 => En[6].CLK
+CLOCK_50 => En[7].CLK
+CLOCK_50 => En[8].CLK
+CLOCK_50 => En[9].CLK
+CLOCK_50 => En[10].CLK
+CLOCK_50 => En[11].CLK
+CLOCK_50 => En[12].CLK
+CLOCK_50 => En[13].CLK
+CLOCK_50 => En[14].CLK
+CLOCK_50 => En[15].CLK
+CLOCK_50 => En[16].CLK
+CLOCK_50 => En[17].CLK
+CLOCK_50 => En[18].CLK
+CLOCK_50 => En[19].CLK
+CLOCK_50 => En[20].CLK
+CLOCK_50 => En[21].CLK
+CLOCK_50 => En[22].CLK
+CLOCK_50 => En[23].CLK
+CLOCK_50 => En[24].CLK
+CLOCK_50 => En[25].CLK
+
+
+|Project|counter:Q0
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+clock => q[0]~reg0.CLK
+clock => q[1]~reg0.CLK
+clock => q[2]~reg0.CLK
+clock => q[3]~reg0.CLK
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+q[0] <= q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[1] <= q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[2] <= q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[3] <= q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|Project|counter:Q1
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+enable => q.OUTPUTSELECT
+clock => q[0]~reg0.CLK
+clock => q[1]~reg0.CLK
+clock => q[2]~reg0.CLK
+clock => q[3]~reg0.CLK
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+clear_b => q.OUTPUTSELECT
+q[0] <= q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[1] <= q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[2] <= q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+q[3] <= q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|Project|hex_decoder:h0
+hex_digit[0] => Decoder0.IN3
+hex_digit[1] => Decoder0.IN2
+hex_digit[2] => Decoder0.IN1
+hex_digit[3] => Decoder0.IN0
+segments[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+segments[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+segments[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+segments[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+segments[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+segments[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+segments[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|Project|hex_decoder:h1
+hex_digit[0] => Decoder0.IN3
+hex_digit[1] => Decoder0.IN2
+hex_digit[2] => Decoder0.IN1
+hex_digit[3] => Decoder0.IN0
+segments[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+segments[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+segments[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+segments[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+segments[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+segments[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+segments[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
