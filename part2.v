@@ -1,10 +1,11 @@
-module Project(KEY, HEX1, HEX0, SW, CLOCK_50);
-    input [0:0] KEY;
-    input [3:0] SW;
-    input CLOCK_50;
-    output [6:0] HEX0, HEX1;
+module Project(KEY, HEX5, HEX4, HEX1, HEX0, SW, LEDR, CLOCK_50);
+	input [3:0] KEY;
+	input [3:0] SW;
+	input CLOCK_50;
+	output [7:0] LEDR;
+	output [6:0] HEX0, HEX1, HEX4, HEX5;
 
-    wire [3:0] one;
+	wire [3:0] one;
 	wire [3:0] ten;
 	
 	 // the time enable once per second
@@ -14,15 +15,58 @@ module Project(KEY, HEX1, HEX0, SW, CLOCK_50);
 		En <= (Enable ? 50_000_000 : En) - 1;
 	end
 	
+	wire [7:0] randVal1, randVal2;
+
+	lfsr rand1(
+	.out(randVal1),  // Output of the counter
+	.enable(1'b1),  // Enable  for counter
+	.clk(CLOCK_50),  // clock input
+	.reset(KEY[2])// reset input
+	);
+	lfsr rand2(
+	.out(randVal2),  // Output of the counter
+	.enable(1'b1),  // Enable  for counter
+	.clk(CLOCK_50),  // clock input
+	.reset(KEY[2])// reset input
+	);
 	
-    counter Q0(.enable(SW[1]),.clock(Enable),.clear_b(SW[0]),.q(one[3:0]));
+   counter Q0(.enable(KEY[3]),.clock(Enable),.clear_b(~SW[0]),.q(one[3:0]));
 	
 	assign en_q1 = (one == 4'b1001) ? 1 : 0; //if one == 9 then ten + 1;
-	counter2 Q1(.enable(en_q1),.clock(Enable),.clear_b(SW[0]),.q(ten[3:0]));
+	counter2 Q1(.enable(en_q1),.clock(Enable),.clear_b(~SW[0]),.q(ten[3:0]));
 	
-    hex_decoder h0(one[3:0] , HEX0);
+   hex_decoder h0(one[3:0] , HEX0);
 	hex_decoder h1(ten[3:0] , HEX1);
+	hex_decoder h2(randVal1, HEX4);
+	hex_decoder h3(randVal2, HEX5);
+endmodule
 
+// random number generator   
+module lfsr(
+	out             ,  // Output of the counter
+	enable          ,  // Enable  for counter
+	clk             ,  // clock input
+	reset              // reset input
+);
+	//----------Output Ports--------------
+	output reg [7:0] out;
+	//------------Input Ports-------------
+	input enable, clk, reset;
+	//------------Internal Variables--------
+	wire linear_feedback;
+
+	//-------------Code Starts Here-------
+	assign linear_feedback = !(out[7] ^ out[3]);
+
+	always @(posedge clk)
+	if (reset) begin // active high reset
+	  out <= 8'b0 ;
+	end else if (enable) begin
+	  out <= {out[6],out[5],
+				 out[4],out[3],
+				 out[2],out[1],
+				 out[0], linear_feedback};
+	end 
 endmodule
 
 
