@@ -1,53 +1,65 @@
 module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, CLOCK_50);
 	input [3:0] KEY;
-	input [3:0] SW;
+	input [17:0] SW;
 	input CLOCK_50;
-	output [7:0] LEDR;
+	
+	
+	output [17:0] LEDR;
 	output [6:0] HEX0, HEX1, HEX2, HEX4, HEX5;
 
 	wire [3:0] one;
 	wire [3:0] ten;
-	
+
 	 // the time enable once per second
 	reg [25:0] En = 0;
 	wire Enable = (En == 0)&& (~(ten == 4'b0110) || SW[0]);
 	always @(posedge CLOCK_50) begin
 		En <= (Enable ? 50_000_000 : En) - 1;
 	end
-	
+
+
 	wire [2:0] randVal1;
 	wire [2:0] randVal2;
 	wire [2:0] randVal3;
 
+	
+	wire [1:0] inOne;
+	wire [1:0] inTwo;	
+	wire [1:0] inThree;
+
 	lfsr rand1(
 	.out(randVal1),  // Output of the counter
 	.enable(~SW[0]),  // Enable  for counter
-	.clk(CLOCK_50),  // clock input
+	.clk(CLOCK_50),  // clock input	
+
 	.reset(~KEY[2]),// reset input
 	.var1(randVal1[0]),
 	.var2(randVal1[1])
 	);
 	lfsr rand2(
-	.out(randVal2),  // Output of the counter
+	.out(randVal2),  // Output of the counter	output reg [2:0] out;
+
 	.enable(~SW[0]),  // Enable  for counter
 	.clk(CLOCK_50),  // clock input
 	.reset(~KEY[2]),// reset input
-	.var1(randVal2[0]),
+	.var1(randVal1[0]),	
+
 	.var2(randVal2[2])
 	);
 	lfsr rand3(
 	.out(randVal3),  // Output of the counter
 	.enable(~SW[0]),  // Enable  for counter
-	.clk(CLOCK_50),  // clock input
+	.clk(CLOCK_50),  // clock input7:0] LEDR;
 	.reset(~KEY[2]),// reset input
 	.var1(randVal3[1]),
 	.var2(randVal3[2])
-	);
+	);	
 	
 	hex_decoder h0(randVal1%3, HEX0);
 	hex_decoder h1(randVal2%3, HEX1);
 	hex_decoder h2(randVal3%3, HEX2);
-	
+
+
    counter Q0(.enable(KEY[3]),.clock(Enable),.clear_b(~SW[0]),.q(one[3:0]));
 	
 	assign en_q1 = (one == 4'b1001) ? 1 : 0; //if one == 9 then ten + 1;
@@ -56,22 +68,59 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, CLOCK_50);
    hex_decoder h4(one[3:0] , HEX4);
 	hex_decoder h5(ten[3:0] , HEX5);
 	
+	
+	
+	always@(*)
+	begin
+	assign inOne = SW[17:16];
+	assign inTwo = SW[15:14];
+	assign inThree = SW[13:12];
+	
+	assign LEDR[17:16] = (inOne == randVal1%3);
+	assign LEDR[15:14] = (inTwo == randVal2%3);
+	assign LEDR[13:12] = (inThree == randVal3%3);
+	end
+	
+	
+	
+	
+endmodule
+
+// Comparator and checker
+module comparator(
+	inputVal, // user input
+	expectedVal, // correct val
+	outputCorrect	
+);
+	
+	output reg outputCorrect; 
+	input  [3:0]inputVal; 
+	input expectedVal; 
+	
+	always @(*)
+	begin
+	if(inputVal == expectedVal)
+		outputCorrect = 1'b1;
+	else	
+		outputCorrect = 1'b0;
+	end
 endmodule
 
 // random number generator   
 module lfsr(
 	out             ,  // Output of the counter
 	enable          ,  // Enable  for counter
-	clk             ,  // clock input
+	clk             ,  // clock input	
+
 	reset,              // reset input
-	var1, // variation in the random value
+	var1, // var
 	var2
 );
 	//----------Output Ports--------------
 	output reg [2:0] out;
-	//------------Input Ports-------------
+	//------------Input Ports-------------Good hierarchy
 	input enable, clk, reset, var1, var2;
-	//------------Internal Variables--------0
+	//------------Internal Variables--------Good hierarchy0
 	wire linear_feedback;
 
 	//-------------Code Starts Here-------
@@ -90,11 +139,12 @@ endmodule
 
 module counter(enable, clock, clear_b, q); //0-9 counter
 	input enable, clock, clear_b;
+
     output reg [3:0]q;
     always @(posedge clock) // triggered every time clock rises
 	begin
 		if (clear_b == 1'b1) // when Clear b is 0
-			q <= 0; // q is set to 0
+			q <= 0; // q is set to 0Good hierarchy
 		else if (q == 4'b1001) // when q is the maximum value for the counter
 			q <= 0; // q reset to 0
 		else if (enable == 1'b1) // increment q only when Enable is 1
