@@ -1,4 +1,4 @@
-module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, CLOCK_50);
+module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
 	input [3:0] KEY;
 	input [17:0] SW;
 	input CLOCK_50;
@@ -76,9 +76,13 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, CLOCK_50);
 	assign inTwo = SW[15:14];
 	assign inThree = SW[13:12];
 	
-	assign LEDR[17:16] = (inOne == randVal1%3);
-	assign LEDR[15:14] = (inTwo == randVal2%3);
-	assign LEDR[13:12] = (inThree == randVal3%3);
+	//assign LEDR[17:16] = (inOne == randVal1%3);
+	//assign LEDR[15:14] = (inTwo == randVal2%3);
+	//assign LEDR[13:12] = (inThree == randVal3%3);
+	
+	if(
+	
+	
 	end
 	
 	
