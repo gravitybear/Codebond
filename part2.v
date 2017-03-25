@@ -1,18 +1,20 @@
-module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
+module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, LEDG, CLOCK_50);
 	input [3:0] KEY;
 	input [17:0] SW;
 	input CLOCK_50;
 	
-	
+	output [4:0] LEDG;
 	output [17:0] LEDR;
 	output [6:0] HEX0, HEX1, HEX2, HEX4, HEX5;
 
 	wire [3:0] one;
 	wire [3:0] ten;
 
+	wire [1:0] winner;
+
 	 // the time enable once per second
 	reg [25:0] En = 0;
-	wire Enable = (En == 0)&& (~(ten == 4'b0110) || SW[0]);
+	wire Enable = (En == 0)&& (~(ten == 4'b0110) || SW[0]) && ~winner; // assuming ~winner works...........
 	always @(posedge CLOCK_50) begin
 		En <= (Enable ? 50_000_000 : En) - 1;
 	end
@@ -27,6 +29,8 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
 	wire [1:0] inTwo;	
 	wire [1:0] inThree;
 
+	
+
 	lfsr rand1(
 	.out(randVal1),  // Output of the counter
 	.enable(~SW[0]),  // Enable  for counter
@@ -37,13 +41,11 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
 	.var2(randVal1[1])
 	);
 	lfsr rand2(
-	.out(randVal2),  // Output of the counter	output reg [2:0] out;
-
+	.out(randVal2),  // Output of the counter
 	.enable(~SW[0]),  // Enable  for counter
 	.clk(CLOCK_50),  // clock input
 	.reset(~KEY[2]),// reset input
 	.var1(randVal1[0]),	
-
 	.var2(randVal2[2])
 	);
 	lfsr rand3(
@@ -60,18 +62,16 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
 	hex_decoder h2(randVal3%3, HEX2);
 
 
-   counter Q0(.enable(KEY[3]),.clock(Enable),.clear_b(~SW[0]),.q(one[3:0]));
+   	counter Q0(.enable(KEY[3]),.clock(Enable),.clear_b(~SW[0]),.q(one[3:0]));
 	
 	assign en_q1 = (one == 4'b1001) ? 1 : 0; //if one == 9 then ten + 1;
 	counter2 Q1(.enable(en_q1),.clock(Enable),.clear_b(~SW[0]),.q(ten[3:0]));
-	
-   hex_decoder h4(one[3:0] , HEX4);
+		
+  	hex_decoder h4(one[3:0] , HEX4);
 	hex_decoder h5(ten[3:0] , HEX5);
 	
 	
 	
-	always@(*)
-	begin
 	assign inOne = SW[17:16];
 	assign inTwo = SW[15:14];
 	assign inThree = SW[13:12];
@@ -79,15 +79,18 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR,LEDG, CLOCK_50);
 	//assign LEDR[17:16] = (inOne == randVal1%3);
 	//assign LEDR[15:14] = (inTwo == randVal2%3);
 	//assign LEDR[13:12] = (inThree == randVal3%3);
+
+	assign winner = ((inOne == randVal1%3) && (inTwo == randVal2%3) && (inThree == randVal3%3));
 	
-	if(inOne == randVal1%3) 
-		assign LEDR[17:16] = inOne == randVal1%3 ;
+	assign LEDG[4:0] = winner;
+	assign LEDR[4:0] = ~winner;
 	
-	
-	end
-	
-	
-	
+	flashlights notifyoutcome(
+		.lights1(LEDR),
+		.lights2(LEDG),
+		.win(winner),
+		.clk(Enable)
+	);
 	
 endmodule
 
@@ -99,7 +102,7 @@ module comparator(
 );
 	
 	output reg outputCorrect; 
-	input  [3:0]inputVal; 
+	input [3:0] inputVal; 
 	input expectedVal; 
 	
 	always @(*)
@@ -109,6 +112,16 @@ module comparator(
 	else	
 		outputCorrect = 1'b0;
 	end
+endmodule
+
+module flashlights(lights1, lights2, win, clk);
+	output [4:0] lights1;
+	output [4:0] lights2;
+	input win;
+	input clk; 
+
+	counter Q5(.enable(1'b1),.clock(clk),.clear_b(1'b0),.q(lights1[3:0]));
+
 endmodule
 
 // random number generator   
