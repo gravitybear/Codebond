@@ -1,0 +1,19 @@
+# Load canceled
+vlib work
+vlog -reportprogress 300 -work work /cmshome/londonla/Desktop/Codebond/part2.v
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 20:43:10 on Mar 24,2017
+# vlog -reportprogress 300 -work work /cmshome/londonla/Desktop/Codebond/part2.v 
+# -- Compiling module Project
+# -- Compiling module comparator
+# -- Compiling module flashlights
+# -- Compiling module lfsr
+# -- Compiling module counter
+# -- Compiling module counter2
+# -- Compiling module hex_decoder
+# 
+# Top level modules:
+# 	Project
+# 	comparator
+# End time: 20:43:11 on Mar 24,2017, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
