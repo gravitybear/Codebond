@@ -76,12 +76,22 @@ module Project(KEY, HEX5, HEX4, HEX2, HEX1, HEX0, SW, LEDR, LEDG, CLOCK_50);
 	assign inTwo = SW[15:14];
 	assign inThree = SW[13:12];
 	
-	assign LEDR[17:16] = (inOne == randVal1%3);
-	assign LEDR[15:14] = (inTwo == randVal2%3);
-	assign LEDR[13:12] = (inThree == randVal3%3);
+	//assign LEDR[17:16] = (inOne == randVal1%3);
+	//assign LEDR[15:14] = (inTwo == randVal2%3);
+	//assign LEDR[13:12] = (inThree == randVal3%3);
 
 	assign winner = ((inOne == randVal1%3) && (inTwo == randVal2%3) && (inThree == randVal3%3));
-
+	
+	assign LEDG[4:0] = winner;
+	assign LEDR[4:0] = ~winner;
+	
+	flashlights notifyoutcome(
+		.lights1(LEDR),
+		.lights2(LEDG),
+		.win(winner),
+		.clk(Enable)
+	);
+	
 endmodule
 
 // Comparator and checker
@@ -104,8 +114,17 @@ module comparator(
 	end
 endmodule
 
-// random number generator
-// using a linear-feedback shift register   
+module flashlights(lights1, lights2, win, clk);
+	output [4:0] lights1;
+	output [4:0] lights2;
+	input win;
+	input clk; 
+
+	counter Q5(.enable(1'b1),.clock(clk),.clear_b(1'b0),.q(lights1[3:0]));
+
+endmodule
+
+// random number generator   
 module lfsr(
 	out             ,  // Output of the counter
 	enable          ,  // Enable  for counter

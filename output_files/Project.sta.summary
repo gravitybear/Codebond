@@ -3,75 +3,75 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
-Slack : -5.392
-TNS   : -119.003
+Slack : -10.310
+TNS   : -261.543
 
-Type  : Slow 1200mV 85C Model Setup 'En[0]'
-Slack : -1.145
-TNS   : -8.060
+Type  : Slow 1200mV 85C Model Setup 'SW[0]'
+Slack : -3.160
+TNS   : -17.379
 
-Type  : Slow 1200mV 85C Model Hold 'En[0]'
-Slack : 0.403
-TNS   : 0.000
+Type  : Slow 1200mV 85C Model Hold 'SW[0]'
+Slack : -0.120
+TNS   : -0.187
 
 Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
-Slack : 0.465
+Slack : 0.402
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
 Slack : -3.000
-TNS   : -36.410
+TNS   : -47.975
 
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'En[0]'
-Slack : -1.285
-TNS   : -10.280
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -13.280
 
 Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -4.771
-TNS   : -105.659
+Slack : -9.310
+TNS   : -236.870
 
-Type  : Slow 1200mV 0C Model Setup 'En[0]'
-Slack : -0.922
-TNS   : -6.436
+Type  : Slow 1200mV 0C Model Setup 'SW[0]'
+Slack : -2.839
+TNS   : -14.181
 
-Type  : Slow 1200mV 0C Model Hold 'En[0]'
-Slack : 0.354
-TNS   : 0.000
+Type  : Slow 1200mV 0C Model Hold 'SW[0]'
+Slack : -0.035
+TNS   : -0.035
 
 Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.419
+Slack : 0.354
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
 Slack : -3.000
-TNS   : -36.410
+TNS   : -47.975
 
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'En[0]'
-Slack : -1.285
-TNS   : -10.280
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -13.280
 
 Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -2.197
-TNS   : -45.534
+Slack : -4.712
+TNS   : -120.491
 
-Type  : Fast 1200mV 0C Model Setup 'En[0]'
-Slack : -0.066
-TNS   : -0.187
+Type  : Fast 1200mV 0C Model Setup 'SW[0]'
+Slack : -1.512
+TNS   : -10.935
 
-Type  : Fast 1200mV 0C Model Hold 'En[0]'
-Slack : 0.180
-TNS   : 0.000
+Type  : Fast 1200mV 0C Model Hold 'SW[0]'
+Slack : -0.165
+TNS   : -0.313
 
 Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.212
+Slack : 0.182
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
 Slack : -3.000
-TNS   : -34.512
+TNS   : -45.461
 
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'En[0]'
-Slack : -1.000
-TNS   : -8.000
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -16.758
 
 ------------------------------------------------------------
