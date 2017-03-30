@@ -143,8 +143,8 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AB17      :        :                   :      
 HEX5[2]                      : AB18      : output : 3.3-V LVTTL       :         : 4         : Y              
 HEX4[0]                      : AB19      : output : 3.3-V LVTTL       :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB20      :        :                   :         : 4         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AB21      :        :                   :         : 4         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AB22      :        :                   :         : 4         :                
+GPIO[2]                      : AB21      : input  : 3.3-V LVTTL       :         : 4         : Y              
+GPIO[0]                      : AB22      : input  : 3.3-V LVTTL       :         : 4         : Y              
 SW[12]                       : AB23      : input  : 2.5 V             :         : 5         : Y              
 SW[11]                       : AB24      : input  : 2.5 V             :         : 5         : Y              
 SW[9]                        : AB25      : input  : 2.5 V             :         : 5         : Y              
@@ -165,7 +165,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AC11      :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AC12      :        :                   :         : 3         :                
 GND                          : AC13      : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AC14      :        :                   :         : 3         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AC15      :        :                   :         : 4         :                
+GPIO[1]                      : AC15      : input  : 3.3-V LVTTL       :         : 4         : Y              
 GND                          : AC16      : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AC17      :        :                   :         : 4         :                
 HEX5[1]                      : AC18      : output : 3.3-V LVTTL       :         : 4         : Y              
